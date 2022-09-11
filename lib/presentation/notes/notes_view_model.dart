@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:note/domain/repository/note_repository.dart';
-import 'package:note/presentation/notes/notes_event.dart';
-import 'package:note/presentation/notes/notes_state.dart';
 
 import '../../domain/model/note.dart';
+import '../../domain/repository/note_repository.dart';
+import 'notes_event.dart';
+import 'notes_state.dart';
 
 class NotesViewModel with ChangeNotifier {
   final NoteRepository repository;
