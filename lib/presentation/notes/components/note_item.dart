@@ -4,8 +4,10 @@ import '../../../domain/model/note.dart';
 
 class NoteItem extends StatelessWidget {
   final Note note;
+  final Function? onDeletePressed;
 
-  const NoteItem({Key? key, required this.note}) : super(key: key);
+  const NoteItem({Key? key, required this.note, this.onDeletePressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +40,15 @@ class NoteItem extends StatelessWidget {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 8,
             right: 8,
-            child: Icon(Icons.delete),
+            child: IconButton(
+              onPressed: () {
+                onDeletePressed?.call();
+              },
+              icon: const Icon(Icons.delete),
+            ),
           ),
         ],
       ),
