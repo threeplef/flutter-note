@@ -8,13 +8,15 @@ import 'notes_state.dart';
 class NotesViewModel with ChangeNotifier {
   final NoteRepository repository;
 
-  NotesState _state = NotesState(notes: []);
+  NotesState _state = const NotesState(notes: []);
 
   NotesState get state => _state;
 
   Note? _recentlyDeletedNote;
 
-  NotesViewModel(this.repository);
+  NotesViewModel(this.repository) {
+    _loadNotes();
+  }
 
   void onEvent(NotesEvent event) {
     event.when(
