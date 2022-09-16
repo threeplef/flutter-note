@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../domain/model/note.dart';
 import 'components/note_item.dart';
+import 'components/order_section.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({Key? key}) : super(key: key);
@@ -46,18 +47,25 @@ class NotesScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
-          children: state.notes
-              .map(
-                (note) => GestureDetector(
-                  onTap: () async {
-                    bool? isSaved = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddEditNoteScreen(
-                          note: note,
+          children: [
+            OrderSection(
+              noteOrder: state.noteOrder,
+              onOrderChanged: (noteOrder) {
+                viewModel.onEvent(NotesEvent.changeOrder(noteOrder));
+              },
+            ),
+            ...state.notes
+                .map(
+                  (note) => GestureDetector(
+                    onTap: () async {
+                      bool? isSaved = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddEditNoteScreen(
+                            note: note,
+                          ),
                         ),
-                      ),
-                    );
+                      );
                     if (isSaved != null && isSaved) {
                       viewModel.onEvent(const NotesEvent.loadNotes());
                     }
@@ -74,16 +82,17 @@ class NotesScreen extends StatelessWidget {
                           onPressed: () {
                             viewModel.onEvent(
                               const NotesEvent.restoreNote(),
-                            );
-                          },
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
+                              );
+                            },
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                    ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
+          ],
         ),
       ),
     );
