@@ -86,7 +86,7 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
           duration: const Duration(milliseconds: 500),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
+            child: ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),

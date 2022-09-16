@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$NotesState {
   List<Note> get notes => throw _privateConstructorUsedError;
   NoteOrder get noteOrder => throw _privateConstructorUsedError;
+  bool get isOrderSectionVisible => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NotesStateCopyWith<NotesState> get copyWith =>
@@ -29,7 +30,8 @@ abstract class $NotesStateCopyWith<$Res> {
   factory $NotesStateCopyWith(
           NotesState value, $Res Function(NotesState) then) =
       _$NotesStateCopyWithImpl<$Res>;
-  $Res call({List<Note> notes, NoteOrder noteOrder});
+  $Res call(
+      {List<Note> notes, NoteOrder noteOrder, bool isOrderSectionVisible});
 
   $NoteOrderCopyWith<$Res> get noteOrder;
 }
@@ -46,6 +48,7 @@ class _$NotesStateCopyWithImpl<$Res> implements $NotesStateCopyWith<$Res> {
   $Res call({
     Object? notes = freezed,
     Object? noteOrder = freezed,
+    Object? isOrderSectionVisible = freezed,
   }) {
     return _then(_value.copyWith(
       notes: notes == freezed
@@ -56,6 +59,10 @@ class _$NotesStateCopyWithImpl<$Res> implements $NotesStateCopyWith<$Res> {
           ? _value.noteOrder
           : noteOrder // ignore: cast_nullable_to_non_nullable
               as NoteOrder,
+      isOrderSectionVisible: isOrderSectionVisible == freezed
+          ? _value.isOrderSectionVisible
+          : isOrderSectionVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -74,7 +81,8 @@ abstract class _$$_NotesStateCopyWith<$Res>
           _$_NotesState value, $Res Function(_$_NotesState) then) =
       __$$_NotesStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Note> notes, NoteOrder noteOrder});
+  $Res call(
+      {List<Note> notes, NoteOrder noteOrder, bool isOrderSectionVisible});
 
   @override
   $NoteOrderCopyWith<$Res> get noteOrder;
@@ -94,6 +102,7 @@ class __$$_NotesStateCopyWithImpl<$Res> extends _$NotesStateCopyWithImpl<$Res>
   $Res call({
     Object? notes = freezed,
     Object? noteOrder = freezed,
+    Object? isOrderSectionVisible = freezed,
   }) {
     return _then(_$_NotesState(
       notes: notes == freezed
@@ -104,6 +113,10 @@ class __$$_NotesStateCopyWithImpl<$Res> extends _$NotesStateCopyWithImpl<$Res>
           ? _value.noteOrder
           : noteOrder // ignore: cast_nullable_to_non_nullable
               as NoteOrder,
+      isOrderSectionVisible: isOrderSectionVisible == freezed
+          ? _value.isOrderSectionVisible
+          : isOrderSectionVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -112,7 +125,9 @@ class __$$_NotesStateCopyWithImpl<$Res> extends _$NotesStateCopyWithImpl<$Res>
 
 class _$_NotesState implements _NotesState {
   const _$_NotesState(
-      {required final List<Note> notes, required this.noteOrder})
+      {required final List<Note> notes,
+      required this.noteOrder,
+      required this.isOrderSectionVisible})
       : _notes = notes;
 
   final List<Note> _notes;
@@ -124,10 +139,12 @@ class _$_NotesState implements _NotesState {
 
   @override
   final NoteOrder noteOrder;
+  @override
+  final bool isOrderSectionVisible;
 
   @override
   String toString() {
-    return 'NotesState(notes: $notes, noteOrder: $noteOrder)';
+    return 'NotesState(notes: $notes, noteOrder: $noteOrder, isOrderSectionVisible: $isOrderSectionVisible)';
   }
 
   @override
@@ -136,14 +153,17 @@ class _$_NotesState implements _NotesState {
         (other.runtimeType == runtimeType &&
             other is _$_NotesState &&
             const DeepCollectionEquality().equals(other._notes, _notes) &&
-            const DeepCollectionEquality().equals(other.noteOrder, noteOrder));
+            const DeepCollectionEquality().equals(other.noteOrder, noteOrder) &&
+            const DeepCollectionEquality()
+                .equals(other.isOrderSectionVisible, isOrderSectionVisible));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_notes),
-      const DeepCollectionEquality().hash(noteOrder));
+      const DeepCollectionEquality().hash(noteOrder),
+      const DeepCollectionEquality().hash(isOrderSectionVisible));
 
   @JsonKey(ignore: true)
   @override
@@ -154,12 +174,15 @@ class _$_NotesState implements _NotesState {
 abstract class _NotesState implements NotesState {
   const factory _NotesState(
       {required final List<Note> notes,
-      required final NoteOrder noteOrder}) = _$_NotesState;
+      required final NoteOrder noteOrder,
+      required final bool isOrderSectionVisible}) = _$_NotesState;
 
   @override
   List<Note> get notes;
   @override
   NoteOrder get noteOrder;
+  @override
+  bool get isOrderSectionVisible;
   @override
   @JsonKey(ignore: true)
   _$$_NotesStateCopyWith<_$_NotesState> get copyWith =>
