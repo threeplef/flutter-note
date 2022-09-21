@@ -82,7 +82,7 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
       ),
       body: SafeArea(
         child: AnimatedContainer(
-          color: Color(viewModel.color),
+          color: Color(viewModel.state.color),
           duration: const Duration(milliseconds: 500),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -101,7 +101,7 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
                         },
                         child: _buildBackgroundColor(
                             color: color,
-                            selected: viewModel.color == color.value),
+                            selected: viewModel.state.color == color.value),
                       ),
                     )
                         .toList(),

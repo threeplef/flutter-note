@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme.copyWith(
               backgroundColor: darkGray,
             ),
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.white),
+        textTheme: Theme.of(context).textTheme.apply(bodyColor: Colors.black),
       ),
       home: const NotesScreen(),
     );

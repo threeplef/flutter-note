@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:note/domain/repository/note_repository.dart';
 import 'package:note/presentation/add_edit_note/add_edit_note_screen.dart';
+import 'package:note/presentation/add_edit_note/add_edit_note_view_model.dart';
 import 'package:note/presentation/notes/notes_event.dart';
 import 'package:note/presentation/notes/notes_view_model.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,23 @@ class NotesScreen extends StatelessWidget {
         onPressed: () async {
           bool? isSaved = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddEditNoteScreen()),
+            MaterialPageRoute(
+              builder: (context) {
+                final repository = context.read<NoteRepository>();
+
+                const nextScreen = AddEditNoteScreen();
+
+                final viewModel =
+                AddEditNoteViewModel(repository);
+
+                print('해시코드!!!!!! : ${viewModel.hashCode}');
+
+                return ChangeNotifierProvider(
+                  create: (_) => viewModel,
+                  child: nextScreen,
+                );
+              },
+            ),
           );
 
           if (isSaved != null && isSaved) {
@@ -66,9 +84,21 @@ class NotesScreen extends StatelessWidget {
                       bool? isSaved = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddEditNoteScreen(
-                            note: note,
-                          ),
+                          builder: (context) {
+                            final repository = context.read<NoteRepository>();
+
+                            final nextScreen = AddEditNoteScreen(note: note);
+
+                            final viewModel =
+                                AddEditNoteViewModel(repository, note: note);
+
+                            print('해시코드!!!!!! : ${viewModel.hashCode}');
+
+                            return ChangeNotifierProvider(
+                              create: (_) => viewModel,
+                              child: nextScreen,
+                            );
+                          },
                         ),
                       );
                     if (isSaved != null && isSaved) {
