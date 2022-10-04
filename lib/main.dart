@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:note/di/provider_setup.dart';
-import 'package:note/ui/colors.dart';
-import 'package:provider/provider.dart';
 
+import 'di/provider_setup.dart';
 import 'presentation/notes/notes_screen.dart';
+import 'ui/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final providers = await getProviders();
+  await setUpDi();
 
-  runApp(
-    MultiProvider(
-      providers: providers,
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

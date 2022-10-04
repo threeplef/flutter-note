@@ -6,11 +6,12 @@ import '../../../domain/util/order_type.dart';
 class OrderSection extends StatelessWidget {
   final NoteOrder noteOrder;
   final Function(NoteOrder noteOrder) onOrderChanged;
+
   const OrderSection({
-    super.key,
+    Key? key,
     required this.noteOrder,
     required this.onOrderChanged,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class OrderSection extends StatelessWidget {
               },
               activeColor: Colors.white,
             ),
-            const Text('제목', style: TextStyle(color: Colors.white)),
+            const Text('제목'),
             Radio<NoteOrder>(
               value: NoteOrder.date(noteOrder.orderType),
               groupValue: noteOrder,
@@ -35,7 +36,7 @@ class OrderSection extends StatelessWidget {
               },
               activeColor: Colors.white,
             ),
-            const Text('날짜', style: TextStyle(color: Colors.white)),
+            const Text('날짜'),
             Radio<NoteOrder>(
               value: NoteOrder.color(noteOrder.orderType),
               groupValue: noteOrder,
@@ -44,7 +45,7 @@ class OrderSection extends StatelessWidget {
               },
               activeColor: Colors.white,
             ),
-            const Text('색상', style: TextStyle(color: Colors.white)),
+            const Text('색상'),
           ],
         ),
         Row(
@@ -53,22 +54,24 @@ class OrderSection extends StatelessWidget {
               value: const OrderType.ascending(),
               groupValue: noteOrder.orderType,
               onChanged: (OrderType? value) {
-                onOrderChanged(
-                    noteOrder.copyWith(orderType: const OrderType.ascending()));
+                onOrderChanged(noteOrder.copyWith(
+                  orderType: const OrderType.ascending(),
+                ));
               },
               activeColor: Colors.white,
             ),
-            const Text('오름차순', style: TextStyle(color: Colors.white)),
+            const Text('오름차순'),
             Radio<OrderType>(
               value: const OrderType.descending(),
               groupValue: noteOrder.orderType,
               onChanged: (OrderType? value) {
                 onOrderChanged(noteOrder.copyWith(
-                    orderType: const OrderType.descending()));
+                  orderType: const OrderType.descending(),
+                ));
               },
               activeColor: Colors.white,
             ),
-            const Text('내림차순', style: TextStyle(color: Colors.white)),
+            const Text('내림차순'),
           ],
         ),
       ],

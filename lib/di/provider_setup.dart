@@ -1,7 +1,5 @@
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
+import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 import '../data/data_source/note_db_helper.dart';
 import '../data/repository/note_repository_impl.dart';
@@ -15,27 +13,45 @@ import '../domain/use_case/use_cases.dart';
 import '../presentation/add_edit_note/add_edit_note_view_model.dart';
 import '../presentation/notes/notes_view_model.dart';
 
-Future<List<SingleChildWidget>> getProviders() async {
-  Database database =
-      await openDatabase('notes_db', version: 1, onCreate: (db, version) async {
-    await db.execute(
-      'CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, color INTEGER, timestamp INTEGER)',
-    );
-  });
+final getIt = GetIt.instance;
 
-  NoteDbHelper noteDbHelper = NoteDbHelper(database);
-  NoteRepository repository = NoteRepositoryImpl(noteDbHelper);
-  UseCases useCases = UseCases(
-      addNoteUseCase: AddNoteUseCase(repository),
-      deleteNoteUseCase: DeleteNoteUseCase(repository),
-      getNoteUseCase: GetNoteUseCase(repository),
-      getNotesUseCase: GetNotesUseCase(repository),
-      updateNoteUseCase: UpdateNoteUseCase(repository));
-  NotesViewModel notesViewModel = NotesViewModel(useCases);
-  AddEditNoteViewModel addEditNoteViewModel = AddEditNoteViewModel(repository);
+Future setUpDi() async {
+  Database database = await openDatabase(
+    'notes_db',
+    version: 1,
+    onCreate: (db, version) async {
+      await db.execute(
+          'CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, color INTEGER, timestamp INTEGER)');
+    },
+  );
 
-  return [
-    ChangeNotifierProvider(create: (_) => notesViewModel),
-    Provider(create: (_) => repository),
-  ];
+  getIt.registerSingleton<Database>(database);
+  getIt.registerSingleton<NoteDbHelper>(NoteDbHelper(getIt.get<Database>()));
+  getIt.registerSingleton<NoteRepository>(
+      NoteRepositoryImpl(getIt.get<NoteDbHelper>()));
+  getIt.registerSingleton<AddNoteUseCase>(
+      AddNoteUseCase(getIt.get<NoteRepository>()));
+  getIt.registerSingleton<DeleteNoteUseCase>(
+      DeleteNoteUseCase(getIt.get<NoteRepository>()));
+  getIt.registerSingleton<GetNoteUseCase>(
+      GetNoteUseCase(getIt.get<NoteRepository>()));
+  getIt.registerSingleton<GetNotesUseCase>(
+      GetNotesUseCase(getIt.get<NoteRepository>()));
+  getIt.registerSingleton<UpdateNoteUseCase>(
+      UpdateNoteUseCase(getIt.get<NoteRepository>()));
+
+  getIt.registerFactory(
+    () => NotesViewModel(
+      UseCases(
+        addNoteUseCase: getIt.get<AddNoteUseCase>(),
+        deleteNoteUseCase: getIt.get<DeleteNoteUseCase>(),
+        getNoteUseCase: getIt.get<GetNoteUseCase>(),
+        getNotesUseCase: getIt.get<GetNotesUseCase>(),
+        updateNoteUseCase: getIt.get<UpdateNoteUseCase>(),
+      ),
+    ),
+  );
+
+  getIt
+      .registerFactory(() => AddEditNoteViewModel(getIt.get<NoteRepository>()));
 }
