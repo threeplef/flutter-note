@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../domain/model/note.dart';
 import '../../domain/repository/note_repository.dart';
@@ -9,6 +10,7 @@ import 'add_edit_note_event.dart';
 import 'add_edit_note_state.dart';
 import 'add_edit_note_ui_event.dart';
 
+@injectable
 class AddEditNoteViewModel with ChangeNotifier {
   final NoteRepository repository;
 

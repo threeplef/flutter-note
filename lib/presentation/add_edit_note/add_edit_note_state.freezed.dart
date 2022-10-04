@@ -30,6 +30,8 @@ abstract class $AddEditNoteStateCopyWith<T, $Res> {
           AddEditNoteState<T> value, $Res Function(AddEditNoteState<T>) then) =
       _$AddEditNoteStateCopyWithImpl<T, $Res>;
   $Res call({Note? note, int color});
+
+  $NoteCopyWith<$Res>? get note;
 }
 
 /// @nodoc
@@ -57,6 +59,17 @@ class _$AddEditNoteStateCopyWithImpl<T, $Res>
               as int,
     ));
   }
+
+  @override
+  $NoteCopyWith<$Res>? get note {
+    if (_value.note == null) {
+      return null;
+    }
+
+    return $NoteCopyWith<$Res>(_value.note!, (value) {
+      return _then(_value.copyWith(note: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -67,6 +80,9 @@ abstract class _$$_AddEditNoteStateCopyWith<T, $Res>
       __$$_AddEditNoteStateCopyWithImpl<T, $Res>;
   @override
   $Res call({Note? note, int color});
+
+  @override
+  $NoteCopyWith<$Res>? get note;
 }
 
 /// @nodoc

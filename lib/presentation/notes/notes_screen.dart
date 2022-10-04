@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../di/provider_setup.dart';
+import '../../di/setup_di.dart';
 import '../add_edit_note/add_edit_note_screen.dart';
 import '../add_edit_note/add_edit_note_view_model.dart';
 import 'components/note_item.dart';

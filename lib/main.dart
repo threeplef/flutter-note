@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'di/provider_setup.dart';
+import 'di/setup_di.dart';
 import 'presentation/notes/notes_screen.dart';
 import 'ui/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await setUpDi();
+  await configureDependencies();
 
   runApp(const MyApp());
 }
