@@ -16,42 +16,33 @@ import '../presentation/notes/notes_view_model.dart';
 final getIt = GetIt.instance;
 
 Future setUpDi() async {
-  Database database = await openDatabase(
+  getIt.registerSingletonAsync(() => openDatabase(
     'notes_db',
     version: 1,
     onCreate: (db, version) async {
       await db.execute(
           'CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, color INTEGER, timestamp INTEGER)');
     },
-  );
-
-  getIt.registerSingleton<Database>(database);
-  getIt.registerSingleton<NoteDbHelper>(NoteDbHelper(getIt.get<Database>()));
-  getIt.registerSingleton<NoteRepository>(
-      NoteRepositoryImpl(getIt.get<NoteDbHelper>()));
-  getIt.registerSingleton<AddNoteUseCase>(
-      AddNoteUseCase(getIt.get<NoteRepository>()));
-  getIt.registerSingleton<DeleteNoteUseCase>(
-      DeleteNoteUseCase(getIt.get<NoteRepository>()));
-  getIt.registerSingleton<GetNoteUseCase>(
-      GetNoteUseCase(getIt.get<NoteRepository>()));
-  getIt.registerSingleton<GetNotesUseCase>(
-      GetNotesUseCase(getIt.get<NoteRepository>()));
-  getIt.registerSingleton<UpdateNoteUseCase>(
-      UpdateNoteUseCase(getIt.get<NoteRepository>()));
+  ));
+  getIt.registerSingleton(NoteDbHelper(await getIt.getAsync()));
+  getIt.registerSingleton<NoteRepository>(NoteRepositoryImpl(getIt.get()));
+  getIt.registerSingleton(AddNoteUseCase(getIt.get()));
+  getIt.registerSingleton(DeleteNoteUseCase(getIt.get()));
+  getIt.registerSingleton(GetNoteUseCase(getIt.get()));
+  getIt.registerSingleton(GetNotesUseCase(getIt.get()));
+  getIt.registerSingleton(UpdateNoteUseCase(getIt.get()));
 
   getIt.registerFactory(
-    () => NotesViewModel(
+        () => NotesViewModel(
       UseCases(
-        addNoteUseCase: getIt.get<AddNoteUseCase>(),
-        deleteNoteUseCase: getIt.get<DeleteNoteUseCase>(),
-        getNoteUseCase: getIt.get<GetNoteUseCase>(),
-        getNotesUseCase: getIt.get<GetNotesUseCase>(),
-        updateNoteUseCase: getIt.get<UpdateNoteUseCase>(),
+        addNoteUseCase: getIt.get(),
+        deleteNoteUseCase: getIt.get(),
+        getNoteUseCase: getIt.get(),
+        getNotesUseCase: getIt.get(),
+        updateNoteUseCase: getIt.get(),
       ),
     ),
   );
 
-  getIt
-      .registerFactory(() => AddEditNoteViewModel(getIt.get<NoteRepository>()));
+  getIt.registerFactory(() => AddEditNoteViewModel(getIt.get()));
 }
